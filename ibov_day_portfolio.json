@@ -1,0 +1,597 @@
+[
+  {
+    "codigo": "ALOS3",
+    "acao": "ALLOS",
+    "tipo": "ON ED NM",
+    "qtde_teorica": 466135796,
+    "part_pct": 0.555
+  },
+  {
+    "codigo": "ABEV3",
+    "acao": "AMBEV S/A",
+    "tipo": "ON",
+    "qtde_teorica": 4273841357,
+    "part_pct": 2.533
+  },
+  {
+    "codigo": "ASAI3",
+    "acao": "ASSAI",
+    "tipo": "ON NM",
+    "qtde_teorica": 1338601375,
+    "part_pct": 0.455
+  },
+  {
+    "codigo": "AURE3",
+    "acao": "AUREN",
+    "tipo": "ON NM",
+    "qtde_teorica": 318338365,
+    "part_pct": 0.138
+  },
+  {
+    "codigo": "AXIA3",
+    "acao": "AXIA ENERGIA",
+    "tipo": "ON N1",
+    "qtde_teorica": 1945846761,
+    "part_pct": 4.342
+  },
+  {
+    "codigo": "AXIA6",
+    "acao": "AXIA ENERGIA",
+    "tipo": "PNB N1",
+    "qtde_teorica": 270655585,
+    "part_pct": 0.659
+  },
+  {
+    "codigo": "AXIA7",
+    "acao": "AXIA ENERGIA",
+    "tipo": "PNC N1",
+    "qtde_teorica": 582580795,
+    "part_pct": 1.253
+  },
+  {
+    "codigo": "AZZA3",
+    "acao": "AZZAS 2154",
+    "tipo": "ON NM",
+    "qtde_teorica": 132447688,
+    "part_pct": 0.126
+  },
+  {
+    "codigo": "B3SA3",
+    "acao": "B3",
+    "tipo": "ON NM",
+    "qtde_teorica": 5196371458,
+    "part_pct": 3.388
+  },
+  {
+    "codigo": "BBSE3",
+    "acao": "BBSEGURIDADE",
+    "tipo": "ON NM",
+    "qtde_teorica": 616186808,
+    "part_pct": 0.778
+  },
+  {
+    "codigo": "BBDC3",
+    "acao": "BRADESCO",
+    "tipo": "ON N1",
+    "qtde_teorica": 1467570789,
+    "part_pct": 0.982
+  },
+  {
+    "codigo": "BBDC4",
+    "acao": "BRADESCO",
+    "tipo": "PN N1",
+    "qtde_teorica": 5106488516,
+    "part_pct": 3.933
+  },
+  {
+    "codigo": "BRAP4",
+    "acao": "BRADESPAR",
+    "tipo": "PN N1",
+    "qtde_teorica": 250914708,
+    "part_pct": 0.227
+  },
+  {
+    "codigo": "BBAS3",
+    "acao": "BRASIL",
+    "tipo": "ON ERJ NM",
+    "qtde_teorica": 2842496541,
+    "part_pct": 2.79
+  },
+  {
+    "codigo": "BRKM5",
+    "acao": "BRASKEM",
+    "tipo": "PNA N1",
+    "qtde_teorica": 265876767,
+    "part_pct": 0.093
+  },
+  {
+    "codigo": "BRAV3",
+    "acao": "BRAVA",
+    "tipo": "ON ATZ NM",
+    "qtde_teorica": 462883017,
+    "part_pct": 0.314
+  },
+  {
+    "codigo": "BPAC11",
+    "acao": "BTGP BANCO",
+    "tipo": "UNT N2",
+    "qtde_teorica": 1404794900,
+    "part_pct": 3.134
+  },
+  {
+    "codigo": "CXSE3",
+    "acao": "CAIXA SEGURI",
+    "tipo": "ON NM",
+    "qtde_teorica": 600000000,
+    "part_pct": 0.389
+  },
+  {
+    "codigo": "CEAB3",
+    "acao": "CEA MODAS",
+    "tipo": "ON NM",
+    "qtde_teorica": 204964309,
+    "part_pct": 0.097
+  },
+  {
+    "codigo": "CMIG4",
+    "acao": "CEMIG",
+    "tipo": "PN N1",
+    "qtde_teorica": 1904057894,
+    "part_pct": 0.837
+  },
+  {
+    "codigo": "COGN3",
+    "acao": "COGNA ON",
+    "tipo": "ON NM",
+    "qtde_teorica": 1914692857,
+    "part_pct": 0.244
+  },
+  {
+    "codigo": "CSMG3",
+    "acao": "COPASA",
+    "tipo": "ON NM",
+    "qtde_teorica": 188467895,
+    "part_pct": 0.375
+  },
+  {
+    "codigo": "CPLE3",
+    "acao": "COPEL",
+    "tipo": "ON NM",
+    "qtde_teorica": 1709534925,
+    "part_pct": 0.913
+  },
+  {
+    "codigo": "CSAN3",
+    "acao": "COSAN",
+    "tipo": "ON ATZ NM",
+    "qtde_teorica": 1802521475,
+    "part_pct": 0.413
+  },
+  {
+    "codigo": "CPFE3",
+    "acao": "CPFL ENERGIA",
+    "tipo": "ON NM",
+    "qtde_teorica": 187732538,
+    "part_pct": 0.344
+  },
+  {
+    "codigo": "CMIN3",
+    "acao": "CSNMINERACAO",
+    "tipo": "ON N2",
+    "qtde_teorica": 1646519336,
+    "part_pct": 0.326
+  },
+  {
+    "codigo": "CURY3",
+    "acao": "CURY S/A",
+    "tipo": "ON NM",
+    "qtde_teorica": 160988231,
+    "part_pct": 0.228
+  },
+  {
+    "codigo": "CYRE3",
+    "acao": "CYRELA REALT",
+    "tipo": "ON NM",
+    "qtde_teorica": 256055995,
+    "part_pct": 0.286
+  },
+  {
+    "codigo": "CYRE4",
+    "acao": "CYRELA REALT",
+    "tipo": "PN NM",
+    "qtde_teorica": 48543949,
+    "part_pct": 0.052
+  },
+  {
+    "codigo": "DIRR3",
+    "acao": "DIRECIONAL",
+    "tipo": "ON NM",
+    "qtde_teorica": 325640184,
+    "part_pct": 0.194
+  },
+  {
+    "codigo": "EMBJ3",
+    "acao": "EMBRAER",
+    "tipo": "ON NM",
+    "qtde_teorica": 722766139,
+    "part_pct": 2.433
+  },
+  {
+    "codigo": "ENGI11",
+    "acao": "ENERGISA",
+    "tipo": "UNT N2",
+    "qtde_teorica": 358053350,
+    "part_pct": 0.702
+  },
+  {
+    "codigo": "ENEV3",
+    "acao": "ENEVA",
+    "tipo": "ON NM",
+    "qtde_teorica": 1912889086,
+    "part_pct": 1.491
+  },
+  {
+    "codigo": "EGIE3",
+    "acao": "ENGIE BRASIL",
+    "tipo": "ON NM",
+    "qtde_teorica": 357310487,
+    "part_pct": 0.438
+  },
+  {
+    "codigo": "EQTL3",
+    "acao": "EQUATORIAL",
+    "tipo": "ON NM",
+    "qtde_teorica": 1250951305,
+    "part_pct": 1.919
+  },
+  {
+    "codigo": "FLRY3",
+    "acao": "FLEURY",
+    "tipo": "ON NM",
+    "qtde_teorica": 447150822,
+    "part_pct": 0.274
+  },
+  {
+    "codigo": "GGBR4",
+    "acao": "GERDAU",
+    "tipo": "PN N1",
+    "qtde_teorica": 1263524206,
+    "part_pct": 0.966
+  },
+  {
+    "codigo": "GOAU4",
+    "acao": "GERDAU MET",
+    "tipo": "PN N1",
+    "qtde_teorica": 830615826,
+    "part_pct": 0.283
+  },
+  {
+    "codigo": "HAPV3",
+    "acao": "HAPVIDA",
+    "tipo": "ON NM",
+    "qtde_teorica": 287507905,
+    "part_pct": 0.109
+  },
+  {
+    "codigo": "HYPE3",
+    "acao": "HYPERA",
+    "tipo": "ON NM",
+    "qtde_teorica": 329017784,
+    "part_pct": 0.277
+  },
+  {
+    "codigo": "IGTI11",
+    "acao": "IGUATEMI S.A",
+    "tipo": "UNT ED N1",
+    "qtde_teorica": 211401696,
+    "part_pct": 0.225
+  },
+  {
+    "codigo": "IRBR3",
+    "acao": "IRBBRASIL RE",
+    "tipo": "ON NM",
+    "qtde_teorica": 81838787,
+    "part_pct": 0.185
+  },
+  {
+    "codigo": "ISAE4",
+    "acao": "ISA ENERGIA",
+    "tipo": "PN EJ N1",
+    "qtde_teorica": 395801044,
+    "part_pct": 0.41
+  },
+  {
+    "codigo": "ITSA4",
+    "acao": "ITAUSA",
+    "tipo": "PN EJ N1",
+    "qtde_teorica": 5970522444,
+    "part_pct": 3.098
+  },
+  {
+    "codigo": "ITUB4",
+    "acao": "ITAUUNIBANCO",
+    "tipo": "PN EJ N1",
+    "qtde_teorica": 5027870728,
+    "part_pct": 8.564
+  },
+  {
+    "codigo": "KLBN11",
+    "acao": "KLABIN S/A",
+    "tipo": "UNT N2",
+    "qtde_teorica": 792355216,
+    "part_pct": 0.593
+  },
+  {
+    "codigo": "RENT3",
+    "acao": "LOCALIZA",
+    "tipo": "ON NM",
+    "qtde_teorica": 977042684,
+    "part_pct": 1.806
+  },
+  {
+    "codigo": "RENT4",
+    "acao": "LOCALIZA",
+    "tipo": "PN NM",
+    "qtde_teorica": 37577993,
+    "part_pct": 0.067
+  },
+  {
+    "codigo": "LREN3",
+    "acao": "LOJAS RENNER",
+    "tipo": "ON NM",
+    "qtde_teorica": 981927306,
+    "part_pct": 0.557
+  },
+  {
+    "codigo": "MGLU3",
+    "acao": "MAGAZ LUIZA",
+    "tipo": "ON NM",
+    "qtde_teorica": 373185407,
+    "part_pct": 0.127
+  },
+  {
+    "codigo": "POMO4",
+    "acao": "MARCOPOLO",
+    "tipo": "PN N2",
+    "qtde_teorica": 727730867,
+    "part_pct": 0.182
+  },
+  {
+    "codigo": "MBRF3",
+    "acao": "MARFRIG",
+    "tipo": "ON NM",
+    "qtde_teorica": 767248368,
+    "part_pct": 0.578
+  },
+  {
+    "codigo": "BEEF3",
+    "acao": "MINERVA",
+    "tipo": "ON NM",
+    "qtde_teorica": 439073587,
+    "part_pct": 0.083
+  },
+  {
+    "codigo": "MOTV3",
+    "acao": "MOTIVA SA",
+    "tipo": "ON NM",
+    "qtde_teorica": 1002196725,
+    "part_pct": 0.608
+  },
+  {
+    "codigo": "MRVE3",
+    "acao": "MRV",
+    "tipo": "ON NM",
+    "qtde_teorica": 374670758,
+    "part_pct": 0.14
+  },
+  {
+    "codigo": "MULT3",
+    "acao": "MULTIPLAN",
+    "tipo": "ON N2",
+    "qtde_teorica": 320022221,
+    "part_pct": 0.41
+  },
+  {
+    "codigo": "NATU3",
+    "acao": "NATURA",
+    "tipo": "ON NM",
+    "qtde_teorica": 838359453,
+    "part_pct": 0.278
+  },
+  {
+    "codigo": "PCAR3",
+    "acao": "P.ACUCAR-CBD",
+    "tipo": "ON NM",
+    "qtde_teorica": 433412603,
+    "part_pct": 0.049
+  },
+  {
+    "codigo": "PETR3",
+    "acao": "PETROBRAS",
+    "tipo": "ON N2",
+    "qtde_teorica": 2943171983,
+    "part_pct": 4.58
+  },
+  {
+    "codigo": "PETR4",
+    "acao": "PETROBRAS",
+    "tipo": "PN ATZ N2",
+    "qtde_teorica": 4410960450,
+    "part_pct": 6.319
+  },
+  {
+    "codigo": "RECV3",
+    "acao": "PETRORECSA",
+    "tipo": "ON NM",
+    "qtde_teorica": 274630892,
+    "part_pct": 0.123
+  },
+  {
+    "codigo": "PRIO3",
+    "acao": "PETRORIO",
+    "tipo": "ON ATZ NM",
+    "qtde_teorica": 762017253,
+    "part_pct": 1.512
+  },
+  {
+    "codigo": "PSSA3",
+    "acao": "PORTO SEGURO",
+    "tipo": "ON NM",
+    "qtde_teorica": 181016454,
+    "part_pct": 0.345
+  },
+  {
+    "codigo": "RADL3",
+    "acao": "RAIADROGASIL",
+    "tipo": "ON NM",
+    "qtde_teorica": 1311428175,
+    "part_pct": 1.198
+  },
+  {
+    "codigo": "RAIZ4",
+    "acao": "RAIZEN",
+    "tipo": "PN N2",
+    "qtde_teorica": 1198936529,
+    "part_pct": 0.028
+  },
+  {
+    "codigo": "RDOR3",
+    "acao": "REDE D OR",
+    "tipo": "ON NM",
+    "qtde_teorica": 1091469308,
+    "part_pct": 1.602
+  },
+  {
+    "codigo": "RAIL3",
+    "acao": "RUMO S.A.",
+    "tipo": "ON NM",
+    "qtde_teorica": 1221155293,
+    "part_pct": 0.71
+  },
+  {
+    "codigo": "SBSP3",
+    "acao": "SABESP",
+    "tipo": "ON NM",
+    "qtde_teorica": 621445261,
+    "part_pct": 3.483
+  },
+  {
+    "codigo": "SANB11",
+    "acao": "SANTANDER BR",
+    "tipo": "UNT",
+    "qtde_teorica": 360347199,
+    "part_pct": 0.44
+  },
+  {
+    "codigo": "CSNA3",
+    "acao": "SID NACIONAL",
+    "tipo": "ON",
+    "qtde_teorica": 727975012,
+    "part_pct": 0.229
+  },
+  {
+    "codigo": "SLCE3",
+    "acao": "SLC AGRICOLA",
+    "tipo": "ON NM",
+    "qtde_teorica": 222404640,
+    "part_pct": 0.133
+  },
+  {
+    "codigo": "SMFT3",
+    "acao": "SMART FIT",
+    "tipo": "ON NM",
+    "qtde_teorica": 467471342,
+    "part_pct": 0.344
+  },
+  {
+    "codigo": "SUZB3",
+    "acao": "SUZANO S.A.",
+    "tipo": "ON NM",
+    "qtde_teorica": 612918471,
+    "part_pct": 1.295
+  },
+  {
+    "codigo": "TAEE11",
+    "acao": "TAESA",
+    "tipo": "UNT N2",
+    "qtde_teorica": 218568234,
+    "part_pct": 0.352
+  },
+  {
+    "codigo": "VIVT3",
+    "acao": "TELEF BRASIL",
+    "tipo": "ON EJ",
+    "qtde_teorica": 738065812,
+    "part_pct": 1.161
+  },
+  {
+    "codigo": "TIMS3",
+    "acao": "TIM",
+    "tipo": "ON NM",
+    "qtde_teorica": 804628136,
+    "part_pct": 0.817
+  },
+  {
+    "codigo": "TOTS3",
+    "acao": "TOTVS",
+    "tipo": "ON NM",
+    "qtde_teorica": 533980424,
+    "part_pct": 0.736
+  },
+  {
+    "codigo": "UGPA3",
+    "acao": "ULTRAPAR",
+    "tipo": "ON NM",
+    "qtde_teorica": 1071443332,
+    "part_pct": 1.007
+  },
+  {
+    "codigo": "USIM5",
+    "acao": "USIMINAS",
+    "tipo": "PNA N1",
+    "qtde_teorica": 515117999,
+    "part_pct": 0.133
+  },
+  {
+    "codigo": "VALE3",
+    "acao": "VALE",
+    "tipo": "ON NM",
+    "qtde_teorica": 3688870616,
+    "part_pct": 11.886
+  },
+  {
+    "codigo": "VAMO3",
+    "acao": "VAMOS",
+    "tipo": "ON NM",
+    "qtde_teorica": 390902974,
+    "part_pct": 0.063
+  },
+  {
+    "codigo": "VBBR3",
+    "acao": "VIBRA",
+    "tipo": "ON NM",
+    "qtde_teorica": 1192531648,
+    "part_pct": 1.299
+  },
+  {
+    "codigo": "VIVA3",
+    "acao": "VIVARA S.A.",
+    "tipo": "ON NM",
+    "qtde_teorica": 123177361,
+    "part_pct": 0.14
+  },
+  {
+    "codigo": "WEGE3",
+    "acao": "WEG",
+    "tipo": "ON NM",
+    "qtde_teorica": 1485954732,
+    "part_pct": 2.69
+  },
+  {
+    "codigo": "YDUQ3",
+    "acao": "YDUQS PART",
+    "tipo": "ON NM",
+    "qtde_teorica": 261365845,
+    "part_pct": 0.125
+  }
+]
