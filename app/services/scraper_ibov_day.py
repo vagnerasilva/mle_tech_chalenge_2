@@ -4,13 +4,14 @@ Scraper para extrair dados do portfólio diário do IBOV da B3.
 Extrai TODAS as linhas da tabela com paginação automática.
 """
 
-import json
+import pandas
 import time
+from turtle import pd
 from typing import List, Dict, Optional
 import logging
 from playwright.sync_api import sync_playwright, Page, TimeoutError as PlaywrightTimeoutError
 from app.utils.data_cleaners import clean_number, clean_percentage, clean_text
-
+from app.utils.constants import S3_PATH
 # Configuração de logs
 logging.basicConfig(
     level=logging.INFO,
@@ -21,12 +22,14 @@ logger = logging.getLogger(__name__)
 class IBOVScraper:
     def __init__(self):
         self.url = "https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br"
-        self.output_file = "ibov_day_portfolio.json"
+        self.output_folder = "data_exec"
+        self.output_file = None
         self.timeout = 30000  # 30 segundos
         self.retry_attempts = 3
         self.retry_delay = 2  # segundos
+        self.execution_time = time.strftime("%Y-%m-%d")
+        self.partition_column = "anomesdia"
         
-    
     def _wait_for_table(self, page: Page) -> bool:
         """Espera a tabela carregar."""
         try:
@@ -54,7 +57,8 @@ class IBOVScraper:
                             "acao": clean_text(cells[1].text_content()),
                             "tipo": clean_text(cells[2].text_content()),
                             "qtde_teorica": clean_number(cells[3].text_content()),
-                            "part_pct": clean_percentage(cells[4].text_content())
+                            "part_pct": clean_percentage(cells[4].text_content()),
+                            f"{self.partition_column}": self.execution_time
                         }
                         data.append(item)
                     except Exception as e:
@@ -180,21 +184,27 @@ class IBOVScraper:
         
         return validated_data
     
-    def _save_json(self, data: List[Dict]) -> bool:
-        """Salva dados em arquivo JSON."""
-        try:
-            with open(self.output_file, 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-            logger.info(f"Dados salvos em: {self.output_file}")
-            return True
-        except Exception as e:
-            logger.error(f"Erro ao salvar arquivo JSON: {e}")
+    def _save_parquet(self, data: List[Dict], local = True) -> bool: 
+        """Salva dados em arquivo Parquet.""" 
+        try: 
+            output = self.output_folder if local else S3_PATH
+            df = pandas.DataFrame(data) 
+            self.output_file = df.to_parquet(
+                output,
+                engine="pyarrow",
+                index=False,
+                partition_cols=[self.partition_column],
+                ) 
+            logger.info(f"Dados salvos em: {self.output_file}") 
+            return True 
+        except Exception as e: 
+            logger.error(f"Erro ao salvar arquivo Parquet: {e}") 
             return False
     
     def run(self) -> bool:
         """Executa o scraper completo."""
         logger.info("Iniciando scraper do IBOV Day Portfolio")
-        
+
         # Executa scraping com retry
         raw_data = self._scrape_with_retry()
         
@@ -205,8 +215,8 @@ class IBOVScraper:
         # Valida dados
         validated_data = self._validate_data(raw_data)
         
-        # Salva JSON
-        if not self._save_json(validated_data):
+        # Salva Parquet
+        if not self._save_parquet(validated_data, local=True): # Para executar na aws, mude esse local para false e inclusa o caminho do s3 no constants.py
             return False
         
         # Imprime resumo
