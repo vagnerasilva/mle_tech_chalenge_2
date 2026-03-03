@@ -40,12 +40,12 @@ python3 run_scraper.py
 - **Scraper IBOV**: Extrai dados completos do portfólio diário do IBOV da B3
 - **Paginação Automática**: Coleta TODAS as páginas de forma automática
 - **Limpeza de Dados**: Normalização de números, percentuais e textos
-- **Output JSON**: Gera arquivo estruturado com todos os dados
+- **Output PARQUET**: Gera arquivo estruturado com todos os dados
 - **Robustez**: Retry, timeout, logs e validação
 
 ## Output
 
-O scraper gera o arquivo `ibov_day_portfolio.json` contendo:
+O scraper gera o arquivo `.parquet` contendo:
 - `codigo`: Código do ativo
 - `acao`: Nome da empresa
 - `tipo`: Tipo da ação

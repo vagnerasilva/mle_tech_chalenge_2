@@ -3,21 +3,54 @@
 Scraper para extrair dados do portfólio diário do IBOV da B3.
 Extrai TODAS as linhas da tabela com paginação automática.
 """
-
+import re
 import pandas
 import time
 from turtle import pd
 from typing import List, Dict, Optional
 import logging
 from playwright.sync_api import sync_playwright, Page, TimeoutError as PlaywrightTimeoutError
-from app.utils.data_cleaners import clean_number, clean_percentage, clean_text
-from app.utils.constants import S3_PATH
+
 # Configuração de logs
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+S3_PATH = ""
+
+def clean_number(value: str) -> int:
+    """Limpa e converte valores numéricos com pontos de milhar."""
+    if not value:
+        return 0
+    # Remove pontos de milhar e espaços
+    cleaned = re.sub(r'[.\s]', '', value.strip())
+    try:
+        return int(cleaned)
+    except ValueError:
+        logger.warning(f"Não foi possível converter número: '{value}'")
+        return 0
+
+def clean_percentage(value: str) -> float:
+    """Limpa e converte valores percentuais."""
+    if not value:
+        return 0.0
+    # Substitui vírgula por ponto e remove espaços
+    cleaned = value.strip().replace(',', '.')
+    try:
+        return float(cleaned)
+    except ValueError:
+        logger.warning(f"Não foi possível converter percentual: '{value}'")
+        return 0.0
+
+def clean_text(value: str) -> str:
+    """Normaliza espaços em texto."""
+    if not value:
+        return ""
+    # Remove espaços extras e normaliza
+    return ' '.join(value.strip().split())
+
 
 class IBOVScraper:
     def __init__(self):
@@ -216,7 +249,7 @@ class IBOVScraper:
         validated_data = self._validate_data(raw_data)
         
         # Salva Parquet
-        if not self._save_parquet(validated_data, local=True): # Para executar na aws, mude esse local para false e inclusa o caminho do s3 no constants.py
+        if not self._save_parquet(validated_data, local=False): # Para executar na aws, mude esse local para false e inclusa o caminho do s3 no constants.py
             return False
         
         # Imprime resumo
