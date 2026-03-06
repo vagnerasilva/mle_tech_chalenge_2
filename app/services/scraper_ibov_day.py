@@ -1,250 +1,209 @@
 #!/usr/bin/env python3
 """
 Scraper para extrair dados do portfólio diário do IBOV da B3.
-Extrai TODAS as linhas da tabela com paginação automática.
 """
 
-import pandas
+import pandas as pd
 import time
-from turtle import pd
-from typing import List, Dict, Optional
+import json
+import base64
+from typing import List, Dict
 import logging
-from playwright.sync_api import sync_playwright, Page, TimeoutError as PlaywrightTimeoutError
+import requests
+
 from app.utils.data_cleaners import clean_number, clean_percentage, clean_text
 from app.utils.constants import S3_PATH
-# Configuração de logs
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
+
 logger = logging.getLogger(__name__)
 
+
 class IBOVScraper:
+
     def __init__(self):
-        self.url = "https://sistemaswebb3-listados.b3.com.br/indexPage/day/IBOV?language=pt-br"
-        self.output_folder = "data_exec"
-        self.output_file = None
-        self.timeout = 30000  # 30 segundos
-        self.retry_attempts = 3
-        self.retry_delay = 2  # segundos
+
+        self.base_url = "https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/"
+
         self.execution_time = time.strftime("%Y-%m-%d")
         self.partition_column = "anomesdia"
-        
-    def _wait_for_table(self, page: Page) -> bool:
-        """Espera a tabela carregar."""
+
+        self.output_folder = "data_exec"
+        self.output_file = None
+
+    def _encode_params(self, page: int):
+
+        payload = {
+            "language": "pt-br",
+            "pageNumber": page,
+            "pageSize": 120,
+            "index": "IBOV",
+            "segment": "1"
+        }
+
+        encoded = base64.b64encode(json.dumps(payload).encode()).decode()
+
+        return encoded
+
+    def _get_page(self, page: int):
+
         try:
-            page.wait_for_selector('table.table.table-responsive-sm.table-responsive-md tbody', 
-                                 timeout=self.timeout)
-            return True
-        except PlaywrightTimeoutError:
-            logger.error("Timeout aguardando tabela carregar")
-            return False
-    
-    def _extract_table_data(self, page: Page) -> List[Dict]:
-        """Extrai dados da tabela atual."""
+
+            params = self._encode_params(page)
+
+            url = self.base_url + params
+
+            logger.info(f"Acessando página {page}")
+
+            response = requests.get(url, timeout=30)
+
+            if response.status_code != 200:
+                logger.error(f"Erro HTTP {response.status_code}")
+                return None
+
+            return response.json()
+
+        except Exception as e:
+            logger.error(f"Erro request: {e}")
+            return None
+
+    def _extract_table_data(self, json_data) -> List[Dict]:
+
         data = []
-        
-        try:
-            # Encontra todas as linhas do tbody
-            rows = page.query_selector_all('table.table.table-responsive-sm.table-responsive-md tbody tr')
-            
-            for row in rows:
-                cells = row.query_selector_all('td')
-                if len(cells) >= 5:  # Verifica se temos todas as colunas esperadas
-                    try:
-                        item = {
-                            "codigo": clean_text(cells[0].text_content()),
-                            "acao": clean_text(cells[1].text_content()),
-                            "tipo": clean_text(cells[2].text_content()),
-                            "qtde_teorica": clean_number(cells[3].text_content()),
-                            "part_pct": clean_percentage(cells[4].text_content()),
-                            f"{self.partition_column}": self.execution_time
-                        }
-                        data.append(item)
-                    except Exception as e:
-                        logger.warning(f"Erro ao processar linha: {e}")
-                        continue
-            
-            logger.info(f"Extraídas {len(data)} linhas da página atual")
+
+        results = json_data.get("results")
+
+        if not results:
             return data
-            
-        except Exception as e:
-            logger.error(f"Erro ao extrair dados da tabela: {e}")
-            return []
-    
-    def _go_to_next_page(self, page: Page) -> bool:
-        """Tenta ir para a próxima página."""
-        try:
-            # Procura pelo botão "next" (próxima página)
-            next_button = page.query_selector('li.pagination-next a')
-            
-            if not next_button:
-                logger.info("Botão 'next' não encontrado - fim da paginação")
-                return False
-            
-            # Verifica se o botão está desabilitado
-            class_attr = next_button.get_attribute('class') or ''
-            parent = next_button.query_selector('..')
-            parent_class = parent.get_attribute('class') or '' if parent else ''
-            
-            if 'disabled' in class_attr or 'disabled' in parent_class:
-                logger.info("Botão 'next' desabilitado - fim da paginação")
-                return False
-            
-            # Clica no botão next
-            logger.info("Indo para a próxima página...")
-            next_button.click()
-            
-            # Espera um pouco para a página carregar
-            time.sleep(2)
-            
-            # Espera a tabela carregar novamente
-            if not self._wait_for_table(page):
-                logger.error("Falha ao carregar tabela na próxima página")
-                return False
-            
-            return True
-            
-        except Exception as e:
-            logger.error(f"Erro ao navegar para próxima página: {e}")
-            return False
-    
-    def _scrape_with_retry(self) -> Optional[List[Dict]]:
-        """Executa o scraping com mecanismo de retry."""
-        for attempt in range(self.retry_attempts):
-            try:
-                logger.info(f"Tentativa {attempt + 1} de {self.retry_attempts}")
-                
-                with sync_playwright() as p:
-                    # Inicia browser headless
-                    browser = p.chromium.launch(headless=True)
-                    context = browser.new_context(
-                        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-                    )
-                    page = context.new_page()
-                    
-                    # Navega para a URL
-                    logger.info(f"Acessando: {self.url}")
-                    page.goto(self.url, timeout=self.timeout)
-                    
-                    # Espera a tabela carregar
-                    if not self._wait_for_table(page):
-                        logger.error("Falha ao carregar tabela inicial")
-                        browser.close()
-                        continue
-                    
-                    all_data = []
-                    page_count = 0
-                    
-                    # Loop de paginação
-                    while True:
-                        page_count += 1
-                        logger.info(f"Processando página {page_count}")
-                        
-                        # Extrai dados da página atual
-                        page_data = self._extract_table_data(page)
-                        all_data.extend(page_data)
-                        
-                        # Tenta ir para próxima página
-                        if not self._go_to_next_page(page):
-                            break
-                    
-                    browser.close()
-                    return all_data
-                    
-            except Exception as e:
-                logger.error(f"Erro na tentativa {attempt + 1}: {e}")
-                if attempt < self.retry_attempts - 1:
-                    logger.info(f"Aguardando {self.retry_delay} segundos antes de tentar novamente...")
-                    time.sleep(self.retry_delay)
-        
-        return None
-    
+
+        for item in results:
+
+            row = {
+                "codigo": clean_text(item.get("cod")),
+                "acao": clean_text(item.get("asset")),
+                "tipo": clean_text(item.get("type")),
+                "qtde_teorica": clean_number(str(item.get("theoricalQty"))),
+                "part_pct": clean_percentage(str(item.get("part"))),
+                self.partition_column: self.execution_time
+            }
+
+            data.append(row)
+
+        logger.info(f"{len(data)} registros extraídos")
+
+        return data
+
+    def _scrape(self) -> List[Dict]:
+
+        all_data = []
+        page = 1
+
+        while True:
+
+            json_data = self._get_page(page)
+
+            if not json_data:
+                break
+
+            page_data = self._extract_table_data(json_data)
+
+            if not page_data:
+                break
+
+            all_data.extend(page_data)
+
+            page += 1
+
+        return all_data
+
     def _validate_data(self, data: List[Dict]) -> List[Dict]:
-        """Valida e remove duplicatas dos dados."""
-        if not data:
-            return []
-        
-        # Remove duplicatas baseadas no código
+
         seen_codes = set()
         validated_data = []
-        duplicates = 0
-        
+
         for item in data:
-            code = item.get('codigo', '')
-            if code and code not in seen_codes:
+
+            code = item["codigo"]
+
+            if code not in seen_codes:
                 seen_codes.add(code)
                 validated_data.append(item)
-            elif code:
-                duplicates += 1
-                logger.warning(f"Código duplicado encontrado e removido: {code}")
-        
-        if duplicates > 0:
-            logger.warning(f"Removidas {duplicates} duplicatas")
-        
+
         return validated_data
-    
-    def _save_parquet(self, data: List[Dict], local = True) -> bool: 
-        """Salva dados em arquivo Parquet.""" 
-        try: 
+
+    def _save_parquet(self, data: List[Dict], local=True) -> bool:
+        # try:
+        #     with open("dados.json", 'w', encoding='utf-8') as f:
+        #         json.dump(data, f, ensure_ascii=False, indent=2)
+        #     logger.info(f"Dados salvos em: {self.output_file}")
+        #     return True
+        # except Exception as e:
+        #     logger.error(f"Erro ao salvar arquivo JSON: {e}")
+        #     return False
+        try:
+
             output = self.output_folder if local else S3_PATH
-            df = pandas.DataFrame(data) 
-            self.output_file = df.to_parquet(
+
+            df = pd.DataFrame(data)
+
+            df.to_parquet(
                 output,
                 engine="pyarrow",
                 index=False,
-                partition_cols=[self.partition_column],
-                ) 
-            logger.info(f"Dados salvos em: {self.output_file}") 
-            return True 
-        except Exception as e: 
-            logger.error(f"Erro ao salvar arquivo Parquet: {e}") 
-            return False
-    
-    def run(self) -> bool:
-        """Executa o scraper completo."""
-        logger.info("Iniciando scraper do IBOV Day Portfolio")
+                partition_cols=[self.partition_column]
+            )
 
-        # Executa scraping com retry
-        raw_data = self._scrape_with_retry()
-        
-        if raw_data is None:
-            logger.error("Falha total no scraping após todas as tentativas")
+            self.output_file = output
+
+            logger.info(f"Arquivo salvo em {output}")
+
+            return True
+
+        except Exception as e:
+
+            logger.error(f"Erro salvando parquet: {e}")
             return False
-        
-        # Valida dados
+
+    def run(self):
+
+        logger.info("Iniciando scraping IBOV")
+
+        raw_data = self._scrape()
+
+        if not raw_data:
+            logger.error("Nenhum dado coletado")
+            return False
+
         validated_data = self._validate_data(raw_data)
-        
-        # Salva Parquet
-        if not self._save_parquet(validated_data, local=True): # Para executar na aws, mude esse local para false e inclusa o caminho do s3 no constants.py
+
+        if not self._save_parquet(validated_data, local=True):
             return False
-        
-        # Imprime resumo
-        print("\n" + "="*50)
-        print("RESUMO DA COLETA")
-        print("="*50)
-        print(f"Total de registros coletados: {len(validated_data)}")
-        print(f"Arquivo gerado: {self.output_file}")
-        print("\nPrimeiros 5 registros:")
-        for i, item in enumerate(validated_data[:5]):
-            print(f"{i+1}. {item}")
-        if len(validated_data) > 5:
-            print("...")
-        print("="*50)
-        
+
+        print("\n==============================")
+        print("RESUMO")
+        print("==============================")
+        print(f"Registros coletados: {len(validated_data)}")
+        print("==============================")
+
         return True
 
+
 def main():
-    """Função principal."""
+
     scraper = IBOVScraper()
+
     success = scraper.run()
-    
+
     if success:
         logger.info("Scraper concluído com sucesso!")
         exit(0)
     else:
         logger.error("Scraper falhou!")
         exit(1)
+
 
 if __name__ == "__main__":
     main()
