@@ -1,5 +1,6 @@
 import sys
 import re
+import urllib.parse
 from datetime import datetime, timedelta
 from awsglue.context import GlueContext
 from awsglue.utils import getResolvedOptions
@@ -9,7 +10,10 @@ from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
 # Argumentos recebidos pelo Glue Job
-args = getResolvedOptions(sys.argv, ['JOB_NAME', 'input_file', 'output_path'])
+args = getResolvedOptions(sys.argv, ['JOB_NAME', 'input_file'])
+
+# Decodifica a URI para remover %3D
+decoded_input_file = urllib.parse.unquote(args['input_file'])
 
 sc = SparkContext()
 glueContext = GlueContext(sc)
@@ -21,7 +25,11 @@ def extract_date_from_path(path):
     return match.group(1) if match else None
 
 # Extrai data atual
-current_date_str = extract_date_from_path(args['input_file'])
+print(decoded_input_file)
+current_date_str = extract_date_from_path(decoded_input_file)
+if not current_date_str:
+    raise ValueError("Data não encontrada no caminho do arquivo.")
+
 current_date = datetime.strptime(current_date_str, "%Y-%m-%d")
 
 # Calcula data anterior
@@ -29,18 +37,28 @@ previous_date = current_date - timedelta(days=1)
 previous_date_str = previous_date.strftime("%Y-%m-%d")
 
 # Monta caminho do arquivo anterior substituindo a data
-previous_file = args['input_file'].replace(current_date_str, previous_date_str)
+previous_file = decoded_input_file.replace(current_date_str, previous_date_str)
 
-# Lê os dois arquivos
-df_current = spark.read.parquet(args['input_file']).withColumn("anomesdia", F.lit(current_date_str))
-df_previous = spark.read.parquet(previous_file).withColumn("anomesdia", F.lit(previous_date_str))
+# Lê o arquivo atual
+df_current = spark.read.parquet(decoded_input_file).withColumn("anomesdia", F.lit(current_date_str))
 
-# Renomeia colunas
+# Tenta ler o arquivo anterior (se existir)
+try:
+    df_previous = spark.read.parquet(previous_file).withColumn("anomesdia", F.lit(previous_date_str))
+    # Renomeia colunas
+    df_previous = df_previous.withColumnRenamed("codigo", "ticker").withColumnRenamed("qtde_teorica", "n_acoes_teoricas")
+except Exception as e:
+    print(f"Aviso: Arquivo anterior não encontrado ({previous_file}). Continuando apenas com o atual.")
+    df_previous = None
+
+# Renomeia colunas do atual
 df_current = df_current.withColumnRenamed("codigo", "ticker").withColumnRenamed("qtde_teorica", "n_acoes_teoricas")
-df_previous = df_previous.withColumnRenamed("codigo", "ticker").withColumnRenamed("qtde_teorica", "n_acoes_teoricas")
 
-# Junta os dois datasets
-df_union = df_current.unionByName(df_previous)
+# Junta os dois datasets (se anterior existir)
+if df_previous:
+    df_union = df_current.unionByName(df_previous)
+else:
+    df_union = df_current
 
 # Define janela para calcular diferença entre períodos
 window_spec = Window.partitionBy("ticker", "acao", "tipo").orderBy("anomesdia")
@@ -58,15 +76,17 @@ glueContext.write_dynamic_frame.from_options(
     frame=dyf,
     connection_type="s3",
     connection_options={
-        "path": args['output_path'] + "/refined/",
-        "partitionKeys": ["anomesdia", "ticker"]
+        "path": "s3://mlet8-fase2-pos/output_glue/refined/",
+        "partitionKeys": ["anomesdia", "ticker"],
+        "catalogDatabase": "default",
+        "catalogTableName": "acoes_refined"
     },
     format="parquet"
 )
 
-# Atualiza metadados no Glue Catalog
-glueContext.write_dynamic_frame.from_catalog(
-    frame=dyf,
-    database="default",
-    table_name="acoes_refined"
-)
+# # Atualiza metadados no Glue Catalog (se tabela já existir)
+# glueContext.write_dynamic_frame.from_catalog(
+#     frame=dyf,
+#     database="default",
+#     table_name="acoes_refined"
+# )
