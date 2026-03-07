@@ -1,0 +1,682 @@
+[
+  {
+    "codigo": "ALOS3",
+    "acao": "ALLOS",
+    "tipo": "ON NM",
+    "qtde_teorica": 466135796,
+    "part_pct": 0.548,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "ABEV3",
+    "acao": "AMBEV S/A",
+    "tipo": "ON",
+    "qtde_teorica": 4273841357,
+    "part_pct": 2.495,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "ASAI3",
+    "acao": "ASSAI",
+    "tipo": "ON NM",
+    "qtde_teorica": 1338601375,
+    "part_pct": 0.42,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "AURE3",
+    "acao": "AUREN",
+    "tipo": "ON NM",
+    "qtde_teorica": 318338365,
+    "part_pct": 0.141,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "AXIA3",
+    "acao": "AXIA ENERGIA",
+    "tipo": "ON ATZ N1",
+    "qtde_teorica": 1945846761,
+    "part_pct": 4.401,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "AXIA6",
+    "acao": "AXIA ENERGIA",
+    "tipo": "PNB N1",
+    "qtde_teorica": 270655585,
+    "part_pct": 0.667,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "AXIA7",
+    "acao": "AXIA ENERGIA",
+    "tipo": "PNC N1",
+    "qtde_teorica": 582580795,
+    "part_pct": 1.278,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "AZZA3",
+    "acao": "AZZAS 2154",
+    "tipo": "ON NM",
+    "qtde_teorica": 132447688,
+    "part_pct": 0.124,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "B3SA3",
+    "acao": "B3",
+    "tipo": "ON NM",
+    "qtde_teorica": 5196371458,
+    "part_pct": 3.434,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BBSE3",
+    "acao": "BBSEGURIDADE",
+    "tipo": "ON NM",
+    "qtde_teorica": 616186808,
+    "part_pct": 0.808,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BBDC3",
+    "acao": "BRADESCO",
+    "tipo": "ON EJ N1",
+    "qtde_teorica": 1467570789,
+    "part_pct": 0.947,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BBDC4",
+    "acao": "BRADESCO",
+    "tipo": "PN EJ N1",
+    "qtde_teorica": 5106488516,
+    "part_pct": 3.827,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BRAP4",
+    "acao": "BRADESPAR",
+    "tipo": "PN N1",
+    "qtde_teorica": 250914708,
+    "part_pct": 0.216,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BBAS3",
+    "acao": "BRASIL",
+    "tipo": "ON EJ NM",
+    "qtde_teorica": 2842496541,
+    "part_pct": 2.697,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BRKM5",
+    "acao": "BRASKEM",
+    "tipo": "PNA N1",
+    "qtde_teorica": 265876767,
+    "part_pct": 0.127,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BRAV3",
+    "acao": "BRAVA",
+    "tipo": "ON ATZ NM",
+    "qtde_teorica": 462883017,
+    "part_pct": 0.35,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BPAC11",
+    "acao": "BTGP BANCO",
+    "tipo": "UNT N2",
+    "qtde_teorica": 1404794900,
+    "part_pct": 3.016,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CXSE3",
+    "acao": "CAIXA SEGURI",
+    "tipo": "ON NM",
+    "qtde_teorica": 600000000,
+    "part_pct": 0.406,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CEAB3",
+    "acao": "CEA MODAS",
+    "tipo": "ON NM",
+    "qtde_teorica": 204964309,
+    "part_pct": 0.093,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CMIG4",
+    "acao": "CEMIG",
+    "tipo": "PN N1",
+    "qtde_teorica": 1904057894,
+    "part_pct": 0.844,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "COGN3",
+    "acao": "COGNA ON",
+    "tipo": "ON NM",
+    "qtde_teorica": 1914692857,
+    "part_pct": 0.23,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CSMG3",
+    "acao": "COPASA",
+    "tipo": "ON ED NM",
+    "qtde_teorica": 188467895,
+    "part_pct": 0.377,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CPLE3",
+    "acao": "COPEL",
+    "tipo": "ON NM",
+    "qtde_teorica": 1709534925,
+    "part_pct": 0.947,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CSAN3",
+    "acao": "COSAN",
+    "tipo": "ON NM",
+    "qtde_teorica": 1802521475,
+    "part_pct": 0.386,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CPFE3",
+    "acao": "CPFL ENERGIA",
+    "tipo": "ON NM",
+    "qtde_teorica": 187732538,
+    "part_pct": 0.341,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CMIN3",
+    "acao": "CSNMINERACAO",
+    "tipo": "ON N2",
+    "qtde_teorica": 1646519336,
+    "part_pct": 0.324,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CURY3",
+    "acao": "CURY S/A",
+    "tipo": "ON NM",
+    "qtde_teorica": 160988231,
+    "part_pct": 0.221,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CYRE3",
+    "acao": "CYRELA REALT",
+    "tipo": "ON NM",
+    "qtde_teorica": 256055995,
+    "part_pct": 0.275,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CYRE4",
+    "acao": "CYRELA REALT",
+    "tipo": "PN NM",
+    "qtde_teorica": 48543949,
+    "part_pct": 0.049,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "DIRR3",
+    "acao": "DIRECIONAL",
+    "tipo": "ON NM",
+    "qtde_teorica": 325640184,
+    "part_pct": 0.188,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "EMBJ3",
+    "acao": "EMBRAER",
+    "tipo": "ON NM",
+    "qtde_teorica": 722766139,
+    "part_pct": 2.221,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "ENGI11",
+    "acao": "ENERGISA",
+    "tipo": "UNT N2",
+    "qtde_teorica": 358053350,
+    "part_pct": 0.726,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "ENEV3",
+    "acao": "ENEVA",
+    "tipo": "ON NM",
+    "qtde_teorica": 1912889086,
+    "part_pct": 1.473,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "EGIE3",
+    "acao": "ENGIE BRASIL",
+    "tipo": "ON NM",
+    "qtde_teorica": 357310487,
+    "part_pct": 0.44,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "EQTL3",
+    "acao": "EQUATORIAL",
+    "tipo": "ON NM",
+    "qtde_teorica": 1250951305,
+    "part_pct": 1.941,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "FLRY3",
+    "acao": "FLEURY",
+    "tipo": "ON NM",
+    "qtde_teorica": 447150822,
+    "part_pct": 0.275,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "GGBR4",
+    "acao": "GERDAU",
+    "tipo": "PN N1",
+    "qtde_teorica": 1263524206,
+    "part_pct": 0.915,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "GOAU4",
+    "acao": "GERDAU MET",
+    "tipo": "PN N1",
+    "qtde_teorica": 830615826,
+    "part_pct": 0.272,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "HAPV3",
+    "acao": "HAPVIDA",
+    "tipo": "ON NM",
+    "qtde_teorica": 287507905,
+    "part_pct": 0.106,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "HYPE3",
+    "acao": "HYPERA",
+    "tipo": "ON NM",
+    "qtde_teorica": 329017784,
+    "part_pct": 0.278,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "IGTI11",
+    "acao": "IGUATEMI S.A",
+    "tipo": "UNT N1",
+    "qtde_teorica": 211401696,
+    "part_pct": 0.222,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "IRBR3",
+    "acao": "IRBBRASIL RE",
+    "tipo": "ON NM",
+    "qtde_teorica": 81838787,
+    "part_pct": 0.175,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "ISAE4",
+    "acao": "ISA ENERGIA",
+    "tipo": "PN EJ N1",
+    "qtde_teorica": 395801044,
+    "part_pct": 0.423,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "ITSA4",
+    "acao": "ITAUSA",
+    "tipo": "PN EJ N1",
+    "qtde_teorica": 5970522444,
+    "part_pct": 3.049,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "ITUB4",
+    "acao": "ITAUUNIBANCO",
+    "tipo": "PN EJ N1",
+    "qtde_teorica": 5027870728,
+    "part_pct": 8.275,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "KLBN11",
+    "acao": "KLABIN S/A",
+    "tipo": "UNT N2",
+    "qtde_teorica": 792355216,
+    "part_pct": 0.593,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "RENT3",
+    "acao": "LOCALIZA",
+    "tipo": "ON NM",
+    "qtde_teorica": 977042684,
+    "part_pct": 1.717,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "RENT4",
+    "acao": "LOCALIZA",
+    "tipo": "PN NM",
+    "qtde_teorica": 37577993,
+    "part_pct": 0.063,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "LREN3",
+    "acao": "LOJAS RENNER",
+    "tipo": "ON NM",
+    "qtde_teorica": 981927306,
+    "part_pct": 0.556,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "MGLU3",
+    "acao": "MAGAZ LUIZA",
+    "tipo": "ON NM",
+    "qtde_teorica": 373185407,
+    "part_pct": 0.133,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "POMO4",
+    "acao": "MARCOPOLO",
+    "tipo": "PN N2",
+    "qtde_teorica": 727730867,
+    "part_pct": 0.177,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "MBRF3",
+    "acao": "MARFRIG",
+    "tipo": "ON NM",
+    "qtde_teorica": 767248368,
+    "part_pct": 0.532,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "BEEF3",
+    "acao": "MINERVA",
+    "tipo": "ON NM",
+    "qtde_teorica": 439073587,
+    "part_pct": 0.076,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "MOTV3",
+    "acao": "MOTIVA SA",
+    "tipo": "ON NM",
+    "qtde_teorica": 1002196725,
+    "part_pct": 0.599,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "MRVE3",
+    "acao": "MRV",
+    "tipo": "ON NM",
+    "qtde_teorica": 374670758,
+    "part_pct": 0.133,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "MULT3",
+    "acao": "MULTIPLAN",
+    "tipo": "ON N2",
+    "qtde_teorica": 320022221,
+    "part_pct": 0.392,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "NATU3",
+    "acao": "NATURA",
+    "tipo": "ON NM",
+    "qtde_teorica": 838359453,
+    "part_pct": 0.281,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "PCAR3",
+    "acao": "P.ACUCAR-CBD",
+    "tipo": "ON NM",
+    "qtde_teorica": 433412603,
+    "part_pct": 0.048,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "PETR3",
+    "acao": "PETROBRAS",
+    "tipo": "ON N2",
+    "qtde_teorica": 2943171983,
+    "part_pct": 5.165,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "PETR4",
+    "acao": "PETROBRAS",
+    "tipo": "PN ATZ N2",
+    "qtde_teorica": 4410960450,
+    "part_pct": 7.121,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "RECV3",
+    "acao": "PETRORECSA",
+    "tipo": "ON NM",
+    "qtde_teorica": 274630892,
+    "part_pct": 0.136,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "PRIO3",
+    "acao": "PETRORIO",
+    "tipo": "ON ATZ NM",
+    "qtde_teorica": 762017253,
+    "part_pct": 1.735,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "PSSA3",
+    "acao": "PORTO SEGURO",
+    "tipo": "ON NM",
+    "qtde_teorica": 181016454,
+    "part_pct": 0.342,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "RADL3",
+    "acao": "RAIADROGASIL",
+    "tipo": "ON NM",
+    "qtde_teorica": 1311428175,
+    "part_pct": 1.193,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "RAIZ4",
+    "acao": "RAIZEN",
+    "tipo": "PN N2",
+    "qtde_teorica": 1198936529,
+    "part_pct": 0.025,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "RDOR3",
+    "acao": "REDE D OR",
+    "tipo": "ON NM",
+    "qtde_teorica": 1091469308,
+    "part_pct": 1.607,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "RAIL3",
+    "acao": "RUMO S.A.",
+    "tipo": "ON NM",
+    "qtde_teorica": 1221155293,
+    "part_pct": 0.725,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "SBSP3",
+    "acao": "SABESP",
+    "tipo": "ON NM",
+    "qtde_teorica": 621445261,
+    "part_pct": 3.449,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "SANB11",
+    "acao": "SANTANDER BR",
+    "tipo": "UNT",
+    "qtde_teorica": 360347199,
+    "part_pct": 0.435,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "CSNA3",
+    "acao": "SID NACIONAL",
+    "tipo": "ON",
+    "qtde_teorica": 727975012,
+    "part_pct": 0.201,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "SLCE3",
+    "acao": "SLC AGRICOLA",
+    "tipo": "ON NM",
+    "qtde_teorica": 222404640,
+    "part_pct": 0.14,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "SMFT3",
+    "acao": "SMART FIT",
+    "tipo": "ON NM",
+    "qtde_teorica": 467471342,
+    "part_pct": 0.337,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "SUZB3",
+    "acao": "SUZANO S.A.",
+    "tipo": "ON NM",
+    "qtde_teorica": 612918471,
+    "part_pct": 1.29,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "TAEE11",
+    "acao": "TAESA",
+    "tipo": "UNT N2",
+    "qtde_teorica": 218568234,
+    "part_pct": 0.358,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "VIVT3",
+    "acao": "TELEF BRASIL",
+    "tipo": "ON",
+    "qtde_teorica": 738065812,
+    "part_pct": 1.173,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "TIMS3",
+    "acao": "TIM",
+    "tipo": "ON NM",
+    "qtde_teorica": 804628136,
+    "part_pct": 0.822,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "TOTS3",
+    "acao": "TOTVS",
+    "tipo": "ON NM",
+    "qtde_teorica": 533980424,
+    "part_pct": 0.738,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "UGPA3",
+    "acao": "ULTRAPAR",
+    "tipo": "ON NM",
+    "qtde_teorica": 1071443332,
+    "part_pct": 1.086,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "USIM5",
+    "acao": "USIMINAS",
+    "tipo": "PNA N1",
+    "qtde_teorica": 515117999,
+    "part_pct": 0.129,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "VALE3",
+    "acao": "VALE",
+    "tipo": "ON NM",
+    "qtde_teorica": 3688870616,
+    "part_pct": 11.153,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "VAMO3",
+    "acao": "VAMOS",
+    "tipo": "ON NM",
+    "qtde_teorica": 390902974,
+    "part_pct": 0.059,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "VBBR3",
+    "acao": "VIBRA",
+    "tipo": "ON NM",
+    "qtde_teorica": 1192531648,
+    "part_pct": 1.397,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "VIVA3",
+    "acao": "VIVARA S.A.",
+    "tipo": "ON NM",
+    "qtde_teorica": 123177361,
+    "part_pct": 0.142,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "WEGE3",
+    "acao": "WEG",
+    "tipo": "ON NM",
+    "qtde_teorica": 1485954732,
+    "part_pct": 2.656,
+    "anomesdia": "2026-03-07"
+  },
+  {
+    "codigo": "YDUQ3",
+    "acao": "YDUQS PART",
+    "tipo": "ON NM",
+    "qtde_teorica": 261365845,
+    "part_pct": 0.118,
+    "anomesdia": "2026-03-07"
+  }
+]

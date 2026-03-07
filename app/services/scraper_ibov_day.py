@@ -135,37 +135,37 @@ class IBOVScraper:
         return validated_data
 
     def _save_parquet(self, data: List[Dict], local=True) -> bool:
-        # try:
-        #     with open("dados.json", 'w', encoding='utf-8') as f:
-        #         json.dump(data, f, ensure_ascii=False, indent=2)
-        #     logger.info(f"Dados salvos em: {self.output_file}")
-        #     return True
-        # except Exception as e:
-        #     logger.error(f"Erro ao salvar arquivo JSON: {e}")
-        #     return False
         try:
-
-            output = self.output_folder if local else S3_PATH
-
-            df = pd.DataFrame(data)
-
-            df.to_parquet(
-                output,
-                engine="pyarrow",
-                index=False,
-                partition_cols=[self.partition_column]
-            )
-
-            self.output_file = output
-
-            logger.info(f"Arquivo salvo em {output}")
-
+            with open("dados2.json", 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            logger.info(f"Dados salvos em: {self.output_file}")
             return True
-
         except Exception as e:
-
-            logger.error(f"Erro salvando parquet: {e}")
+            logger.error(f"Erro ao salvar arquivo JSON: {e}")
             return False
+        # try:
+
+        #     output = self.output_folder if local else S3_PATH
+
+        #     df = pd.DataFrame(data)
+
+        #     df.to_parquet(
+        #         output,
+        #         engine="pyarrow",
+        #         index=False,
+        #         partition_cols=[self.partition_column]
+        #     )
+
+        #     self.output_file = output
+
+        #     logger.info(f"Arquivo salvo em {output}")
+
+        #     return True
+
+        # except Exception as e:
+
+        #     logger.error(f"Erro salvando parquet: {e}")
+        #     return False
 
     def run(self):
 
