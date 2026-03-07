@@ -91,7 +91,9 @@ if previous_file:
     df_previous = df_previous \
         .withColumnRenamed("codigo", "ticker") \
         .withColumnRenamed("qtde_teorica", "n_acoes_teoricas")
+
     print(df_previous)
+
 else:
     print("Aviso: Nenhum arquivo encontrado na partição anterior.")
     df_previous = None
@@ -114,6 +116,15 @@ window_spec = Window.partitionBy("ticker", "acao", "tipo").orderBy("anomesdia")
 df_union = df_union.withColumn(
     "diff_part_pct",
     F.col("part_pct") - F.lag("part_pct").over(window_spec)
+)
+
+# Nova coluna de nível de participação
+df_union = df_union.withColumn(
+    "nivel_participacao",
+    F.when(F.col("part_pct") <= 0.1, F.lit("pequena"))
+     .when((F.col("part_pct") > 0.1) & (F.col("part_pct") <= 1), F.lit("media"))
+     .when(F.col("part_pct") > 1, F.lit("grande"))
+     .otherwise(F.lit(None))
 )
 
 # Converte para DynamicFrame
