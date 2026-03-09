@@ -9,13 +9,35 @@
 │   │   └── __init__.py
 │   ├── services/
 │   │   ├── __init__.py
+│   │   ├── glue_extract_data.py
+│   │   ├── glue_refined.py
+│   │   ├── lambda_trigger_glue.py
 │   │   └── scraper_ibov_day.py  # Scraper do IBOV
 │   └── utils/
 │       ├── __init__.py
+│       ├── constants.py
 │       └── data_cleaners.py     # Funções de limpeza de dados
-├── run_scraper.py               # Script principal para executar o scraper
+├── data_exec/
+│   ├── anomesdia=2026-03-02/
+│   └── anomesdia=2026-03-06/
+├── terraform/
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── terraform.tfvars
+│   ├── variables.tf
+│   └── modules/
+│       └── start_glue/
+│           ├── main.tf
+│           ├── outputs.tf
+│           └── variables.tf
+├── dados.json
+├── dados2.json
+├── ibov_day_portfolio.json
+├── pytest.ini
+├── readme.md
 ├── requirements.txt             # Dependências Python
-└── ibov_day_portfolio.json     # Output do scraper (gerado após execução)
+└── run_scraper.py               # Script principal para executar o scraper
 ```
 
 ## Como Executar
@@ -51,3 +73,23 @@ O scraper gera o arquivo `.parquet` contendo:
 - `tipo`: Tipo da ação
 - `qtde_teorica`: Quantidade teórica (número inteiro)
 - `part_pct`: Participação percentual (float)
+
+## Informações úteis
+
+### Os scripts estão na pasta de serviços
+- glue_extract_data.py 
+É o primeiro glue, o que precisa ser schedulado diariamente
+- glue_refined.py
+É o glue que faz o refinamento da tabela e comparação com partição anterior
+- lambda_trigger_glue.py
+Responsável por identificar o arquivo parquet que acionou a lambda e startar o ultimo glue job.
+
+### Serviços criados
+
+- glue_refined_spark - Spark - Script
+- glue_extract_data - Python shell - Script
+- lambda-glue-trigger
+
+- s3://mlet8-fase2-pos/athena-mlet8/
+- s3://mlet8-fase2-pos/mlte8-scraping/
+- s3://mlet8-fase2-pos/output_glue/refined/
