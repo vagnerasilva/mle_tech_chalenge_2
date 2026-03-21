@@ -248,12 +248,68 @@ from pyspark.sql.window import Window
    - Adiciona coluna `anomesdia`
    - Junta datasets atual + anterior (se disponível)
 
-5. **Cálculo de Diferenças:**
-   - Define janela por `ticker`, `acao`, `tipo` ordenada por `anomesdia`
-   - `diff_part_pct = part_pct - lag(part_pct)`
+5. **Cálculo de Diferenças (diff_part_pct):**
+   
+   **Objetivo:** Calcular a variação na participação percentual de cada ação em relação ao dia anterior.
+   
+   **Lógica Técnica:**
+   ```python
+   window_spec = Window.partitionBy("ticker", "acao", "tipo").orderBy("anomesdia")
+   df_union = df_union.withColumn(
+       "diff_part_pct",
+       F.col("part_pct") - F.lag("part_pct").over(window_spec)
+   )
+   ```
+   
+   **Explicação Detalhada:**
+   - **Janela (Window):** Agrupa registros por `ticker`, `acao` e `tipo`, ordenados por `anomesdia`
+   - **Função lag():** Retorna o valor da linha anterior na janela (dia anterior)
+   - **Cálculo:** `diff_part_pct = part_pct_atual - part_pct_anterior`
+   - **Resultado:** Valor positivo = participação aumentou; negativo = diminuiu; null = primeiro dia
+   
+   **Exemplo Prático:**
+   ```
+   Ticker: PETR4, Data: 2024-01-01, part_pct: 5.2
+   Ticker: PETR4, Data: 2024-01-02, part_pct: 5.5
+   Ticker: PETR4, Data: 2024-01-03, part_pct: 5.1
+   
+   Resultado:
+   - 2024-01-01: diff_part_pct = null (sem dia anterior)
+   - 2024-01-02: diff_part_pct = 5.5 - 5.2 = 0.3 (+0.3%)
+   - 2024-01-03: diff_part_pct = 5.1 - 5.5 = -0.4 (-0.4%)
+   ```
 
-6. **Categorização:**
-   - `nivel_participacao` baseado em faixas de `part_pct`
+6. **Categorização (nivel_participacao):**
+   
+   **Objetivo:** Classificar ações por nível de participação no IBOV baseado em faixas percentuais.
+   
+   **Lógica Técnica:**
+   ```python
+   df_union = df_union.withColumn(
+       "nivel_participacao",
+       F.when(F.col("part_pct") <= 0.1, F.lit("pequena"))
+        .when((F.col("part_pct") > 0.1) & (F.col("part_pct") <= 1), F.lit("media"))
+        .when(F.col("part_pct") > 1, F.lit("grande"))
+        .otherwise(F.lit(None))
+   )
+   ```
+   
+   **Faixas de Classificação:**
+   - **Pequena:** `part_pct ≤ 0.1%` (ações com participação muito baixa)
+   - **Média:** `0.1% < part_pct ≤ 1%` (ações com participação moderada)
+   - **Grande:** `part_pct > 1%` (ações com participação significativa)
+   
+   **Exemplo Prático:**
+   ```
+   Ações Grandes (>1%): VALE3 (8.2%), PETR4 (5.1%), ITUB4 (3.8%)
+   Ações Médias (0.1-1%): BBDC4 (0.8%), ABEV3 (0.6%), WEGE3 (0.4%)
+   Ações Pequenas (≤0.1%): Ações menores como GNDI3 (0.05%), ALPA4 (0.02%)
+   ```
+   
+   **Importância para Análise:**
+   - **Ações Grandes:** Blue chips, alta liquidez, impacto maior no índice
+   - **Ações Médias:** Empresas estabelecidas, bom equilíbrio risco/retorno
+   - **Ações Pequenas:** Maior volatilidade, oportunidades de crescimento
 
 7. **Saída:**
    - Converte para `DynamicFrame`
@@ -261,7 +317,33 @@ from pyspark.sql.window import Window
    - Particiona por `anomesdia`, `ticker`
    - Salva na tabela `acoes_refined`
 
-### Dependências Externas
+### Lógica de Negócio dos Cálculos Diferenciais
+
+**Por que calcular diferenças na participação?**
+
+O IBOV é um índice dinâmico onde a participação das ações muda constantemente devido a:
+- **Eventos Corporativos:** Fusões, aquisições, emissões de ações
+- **Rebalanceamento:** Ajustes periódicos da B3 para refletir valor de mercado
+- **Performance Relativa:** Ações que se valorizam ganham mais peso no índice
+
+**Variações na participação indicam:**
+- **Tendências de Mercado:** Ações em alta tendem a ganhar participação
+- **Setoriais em Destaque:** Setores em crescimento aumentam peso relativo
+- **Riscos de Concentração:** Índice muito concentrado em poucas ações
+
+**Categorização por tamanho:**
+- **Segmentação de Risco:** Ações grandes são mais estáveis
+- **Estratégias de Investimento:** Diferentes abordagens para diferentes tamanhos
+- **Análise Comparativa:** Comparar performance dentro de categorias similares
+
+**Aplicações Práticas:**
+- **Gestão de Portfólio:** Rebalanceamento baseado em mudanças de participação
+- **Análise de Risco:** Monitorar concentração do índice
+- **Pesquisa de Investimentos:** Identificar ações com tendência de crescimento
+
+---
+
+## 6. Utilitários: `app/utils/`
 
 - **GlueContext:** Para operações Glue (sinks, catálogos)
 - **SparkContext/SparkSession:** Para processamento distribuído
