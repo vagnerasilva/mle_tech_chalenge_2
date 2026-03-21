@@ -34,6 +34,77 @@ flowchart TD
     style G fill:#e8f5e8
 ```
 
+## Diagrama de Classes UML
+
+O diagrama abaixo representa as classes principais e suas interações no fluxo de dados do pipeline ETL.
+
+```mermaid
+classDiagram
+    class run_scraper {
+        +main()
+    }
+    
+    class IBOVScraper {
+        +base_url: str
+        +execution_time: str
+        +partition_column: str
+        +output_folder: str
+        +output_file: str
+        +__init__()
+        +_encode_params(page: int): str
+        +_get_page(page: int): dict
+        +_extract_table_data(json_data: dict): List[Dict]
+        +_scrape(): List[Dict]
+        +_validate_data(data: List[Dict]): List[Dict]
+        +_save_parquet(data: List[Dict], local: bool): bool
+        +run(): bool
+    }
+    
+    class lambda_trigger_glue {
+        +lambda_handler(event, context)
+    }
+    
+    class glue_refined {
+        +extract_date_from_path(path: str): str
+        +get_last_file_from_partition(s3_path: str): str
+    }
+    
+    class GlueContext {
+        +getSink()
+    }
+    
+    class SparkContext {
+        +spark_session
+    }
+    
+    class DynamicFrame {
+        +fromDF()
+    }
+    
+    class boto3 {
+        +client(service: str)
+    }
+    
+    run_scraper --> IBOVScraper : chama main()
+    lambda_trigger_glue --> boto3 : usa client('glue')
+    glue_refined --> GlueContext : cria contexto
+    glue_refined --> SparkContext : cria sessão Spark
+    glue_refined --> DynamicFrame : converte DataFrame
+    GlueContext --> DynamicFrame : escreve frame
+```
+
+### Explicação do Fluxo de Dados no Diagrama
+
+1. **`run_scraper`** → **`IBOVScraper`**: O script inicial chama a classe `IBOVScraper` para executar o scraping local.
+
+2. **`IBOVScraper`** (em `glue_extract_data.py`): Classe responsável pela extração de dados da API B3, validação e salvamento no S3.
+
+3. **`lambda_trigger_glue`** → **`boto3`**: A função Lambda utiliza o cliente boto3 para iniciar o job Glue de refinamento quando um arquivo é salvo no S3.
+
+4. **`glue_refined`** → **`GlueContext`** e **`SparkContext`**: O job de refinamento utiliza o contexto Glue e Spark para processar os dados.
+
+5. **`glue_refined`** → **`DynamicFrame`**: Converte o DataFrame Spark em DynamicFrame para escrita no catálogo Glue/Athena.
+
 ## Componentes Detalhados
 
 ### 1. Script de Inicialização (`run_scraper.py`)
