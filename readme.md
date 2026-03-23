@@ -78,3 +78,8 @@ O scraper gera o arquivo `.parquet` contendo:
 Apresentacao : 
 https://docs.google.com/presentation/d/1SqqSkTNXWJ_eD03MGPfhx81509R4FvX-NmOdm7pXniM/edit?usp=sharing
 
+
+
+https://drive.google.com/file/d/12z0F_ki3O7fxoxS1UrPE54DXYO-wWFZ9/view?usp=sharing
+
+https://drive.google.com/file/d/12z0F_ki3O7fxoxS1UrPE54DXYO-wWFZ9/view?usp=sharing
