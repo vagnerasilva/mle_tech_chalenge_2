@@ -71,3 +71,10 @@ O scraper gera o arquivo `.parquet` contendo:
 - s3://mlet8-fase2-pos/athena-mlet8/
 - s3://mlet8-fase2-pos/mlte8-scraping/
 - s3://mlet8-fase2-pos/output_glue/refined/
+
+
+# Links uteis 
+
+Apresentacao : 
+https://docs.google.com/presentation/d/1SqqSkTNXWJ_eD03MGPfhx81509R4FvX-NmOdm7pXniM/edit?usp=sharing
+
