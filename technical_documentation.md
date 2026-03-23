@@ -8,30 +8,27 @@ Este projeto implementa um pipeline de ETL (Extract, Transform, Load) para colet
 
 O fluxo de dados segue a seguinte sequência:
 
-1. **Execução do Scraper** (`run_scraper.py`)
-2. **Glue Job de Extração** (`glue_extract_data.py`)
-3. **Armazenamento no S3**
-4. **Trigger Lambda** (`lambda_trigger_glue.py`)
-5. **Glue Job de Refinamento** (`glue_refined.py`)
-6. **Armazenamento Final na Tabela** (`acoes_refined`)
+1. **Glue Job de Extração** (`glue_extract_data.py`)
+2. **Armazenamento no S3**
+3. **Trigger Lambda** (`lambda_trigger_glue.py`)
+4. **Glue Job de Refinamento** (`glue_refined.py`)
+5. **Armazenamento Final na Tabela** (`acoes_refined`)
 
 ### Diagrama de Fluxo
 
 ```mermaid
 flowchart TD
-    A[run_scraper.py] --> B[glue_extract_data.py<br/>Glue Job]
-    B --> C[S3 Bucket<br/>s3://mlet8-fase2-pos/mlte8-scraping/]
-    C --> D[Evento S3 PUT]
-    D --> E[lambda_trigger_glue.py<br/>Lambda Function]
-    E --> F[glue_refined.py<br/>Glue Job Spark]
-    F --> G[Tabela acoes_refined<br/>Athena Catalog]
+    A[glue_extract_data.py<br/>Glue Job] --> B[S3 Bucket<br/>s3://mlet8-fase2-pos/mlte8-scraping/]
+    B --> C[Evento S3 PUT]
+    C --> D[lambda_trigger_glue.py<br/>Lambda Function]
+    D --> E[glue_refined.py<br/>Glue Job Spark]
+    E --> F[Tabela acoes_refined<br/>Athena Catalog]
     
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style C fill:#e8f5e8
-    style E fill:#fff3e0
-    style F fill:#fce4ec
-    style G fill:#e8f5e8
+    style A fill:#f3e5f5
+    style B fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#e8f5e8
 ```
 
 ## Diagrama de Classes UML
@@ -40,10 +37,6 @@ O diagrama abaixo representa as classes principais e suas interações no fluxo 
 
 ```mermaid
 classDiagram
-    class run_scraper {
-        +main()
-    }
-    
     class IBOVScraper {
         +base_url: str
         +execution_time: str
@@ -85,7 +78,6 @@ classDiagram
         +client(service: str)
     }
     
-    run_scraper --> IBOVScraper : chama main()
     lambda_trigger_glue --> boto3 : usa client('glue')
     glue_refined --> GlueContext : cria contexto
     glue_refined --> SparkContext : cria sessão Spark
@@ -95,9 +87,7 @@ classDiagram
 
 ### Explicação do Fluxo de Dados no Diagrama
 
-1. **`run_scraper`** → **`IBOVScraper`**: O script inicial chama a classe `IBOVScraper` para executar o scraping local.
-
-2. **`IBOVScraper`** (em `glue_extract_data.py`): Classe responsável pela extração de dados da API B3, validação e salvamento no S3.
+1. **`IBOVScraper`** (em `glue_extract_data.py`): Classe responsável pela extração de dados da API B3, validação e salvamento no S3.
 
 3. **`lambda_trigger_glue`** → **`boto3`**: A função Lambda utiliza o cliente boto3 para iniciar o job Glue de refinamento quando um arquivo é salvo no S3.
 
@@ -107,25 +97,9 @@ classDiagram
 
 ## Componentes Detalhados
 
-### 1. Script de Inicialização (`run_scraper.py`)
+### 1. Glue Job de Extração: `app/services/glue_extract_data.py`
 
-**Localização:** `/run_scraper.py`
-
-**Propósito:** Script principal para execução local do scraper IBOV.
-
-**Funcionalidades:**
-- Importa e executa a função `main()` do módulo `app.services.scraper_ibov_day`
-- Configura o path do Python para permitir imports relativos
-- Retorna código de saída baseado no sucesso da execução
-
-**Uso:**
-```bash
-python3 run_scraper.py
-```
-
-### 2. Scraper IBOV (`app/services/scraper_ibov_day.py`)
-
-**Propósito:** Coleta dados do portfólio diário do IBOV da API da B3.
+**Propósito:** Job Glue que executa o scraping do IBOV e salva os dados brutos no S3.
 
 **Principais Métodos:**
 
@@ -135,7 +109,7 @@ python3 run_scraper.py
 - `_extract_table_data(json_data)`: Extrai dados da resposta JSON
 - `_scrape()`: Coordena a coleta de todas as páginas
 - `_validate_data(data)`: Remove duplicatas baseadas no código do ativo
-- `_save_parquet(data, local=True)`: Salva dados em formato JSON localmente
+- `_save_parquet(data, local=False)`: Salva dados em formato Parquet no S3
 
 **Fonte de Dados:** `https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/`
 
@@ -147,11 +121,7 @@ python3 run_scraper.py
 - `part_pct`: Participação percentual (float)
 - `anomesdia`: Data de execução (YYYY-MM-DD)
 
-### 3. Glue Job de Extração (`app/services/glue_extract_data.py`)
-
-**Propósito:** Job Glue que executa o scraping e salva os dados brutos no S3.
-
-**Diferenças do Scraper Local:**
+**Armazenamento:**
 - Salva dados diretamente no S3 em formato Parquet
 - Particiona dados por `anomesdia`
 - Destino: `s3://mlet8-fase2-pos/mlte8-scraping/`
@@ -161,7 +131,7 @@ python3 run_scraper.py
 - Schedule: Cron diário (ex: `cron(0 3 * * ? *)` - 3:00 AM diariamente)
 - Tipo: Python Shell
 
-### 4. Lambda Trigger (`app/services/lambda_trigger_glue.py`)
+### 2. Lambda Trigger: `app/services/lambda_trigger_glue.py`
 
 **Propósito:** Função Lambda acionada por eventos do S3 para iniciar o job de refinamento.
 
@@ -175,7 +145,7 @@ python3 run_scraper.py
 **Parâmetros Passados:**
 - `--input_file`: Caminho completo do arquivo Parquet que acionou o evento
 
-### 5. Glue Job de Refinamento (`app/services/glue_refined.py`)
+### 3. Glue Job de Refinamento: `app/services/glue_refined.py`
 
 **Propósito:** Processa os dados brutos, compara com a partição anterior e gera dados refinados.
 

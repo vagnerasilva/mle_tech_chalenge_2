@@ -32,12 +32,11 @@
 - **Mostrar diagrama Mermaid** (já criado na documentação)
 
 ### Componentes Principais (1:45)
-1. **Scraper Local** (`run_scraper.py`) - Extração inicial
-2. **Glue Job Extract** - Processamento diário automatizado
-3. **S3 Bucket** - Armazenamento com particionamento
-4. **Lambda Function** - Orquestração automática
-5. **Glue Job Refined** - Transformações avançadas com Spark
-6. **Athena Table** - Consulta SQL dos dados refinados
+1. **Glue Job Extract** - Processamento e extração diária em AWS
+2. **S3 Bucket** - Armazenamento com particionamento
+3. **Lambda Function** - Orquestração automática
+4. **Glue Job Refined** - Transformações avançadas com Spark
+5. **Athena Table** - Consulta SQL dos dados refinados
 
 **Transição:** "Agora vamos verificar como cada requisito foi atendido"
 

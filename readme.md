@@ -5,18 +5,15 @@
 ```
 ├── app/
 │   ├── __init__.py
-│   ├── routers/
-│   │   └── __init__.py
 │   ├── services/
 │   │   ├── __init__.py
-│   │   ├── glue_extract_data.py
-│   │   ├── glue_refined.py
-│   │   ├── lambda_trigger_glue.py
-│   │   └── scraper_ibov_day.py  # Scraper do IBOV
+│   │   ├── glue_extract_data.py    # Glue Job de Extração
+│   │   ├── glue_refined.py         # Glue Job de Refinamento
+│   │   └── lambda_trigger_glue.py  # Function Lambda
 │   └── utils/
 │       ├── __init__.py
 │       ├── constants.py
-│       └── data_cleaners.py     # Funções de limpeza de dados
+│       └── data_cleaners.py        # Funções de limpeza de dados
 ├── data_exec/
 │   ├── anomesdia=2026-03-02/
 │   └── anomesdia=2026-03-06/
@@ -36,30 +33,12 @@
 ├── ibov_day_portfolio.json
 ├── pytest.ini
 ├── readme.md
-├── requirements.txt             # Dependências Python
-└── run_scraper.py               # Script principal para executar o scraper
-```
-
-## Como Executar
-
-### 1. Instalar Dependências
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Instalar Browsers do Playwright
-```bash
-python3 -m playwright install
-```
-
-### 3. Executar o Scraper
-```bash
-python3 run_scraper.py
+└── requirements.txt             # Dependências Python
 ```
 
 ## Funcionalidades
 
-- **Scraper IBOV**: Extrai dados completos do portfólio diário do IBOV da B3
+- **Glue Job Extract**: Extrai dados completos do portfólio diário do IBOV da B3
 - **Paginação Automática**: Coleta TODAS as páginas de forma automática
 - **Limpeza de Dados**: Normalização de números, percentuais e textos
 - **Output PARQUET**: Gera arquivo estruturado com todos os dados
@@ -76,19 +55,18 @@ O scraper gera o arquivo `.parquet` contendo:
 
 ## Informações úteis
 
-### Os scripts estão na pasta de serviços
-- glue_extract_data.py 
-É o primeiro glue, o que precisa ser schedulado diariamente
-- glue_refined.py
-É o glue que faz o refinamento da tabela e comparação com partição anterior
-- lambda_trigger_glue.py
-Responsável por identificar o arquivo parquet que acionou a lambda e startar o ultimo glue job.
+### Componentes principais
+- **glue_extract_data.py**: Glue Job para coleta e extração de dados do IBOV (schedulado diariamente)
+- **glue_refined.py**: Glue Job Spark que refina os dados e compara com partição anterior
+- **lambda_trigger_glue.py**: Function Lambda acionada por eventos S3, responsável por iniciar o glue_refined_spark Job
 
-### Serviços criados
+### Serviços AWS criados
 
 - glue_refined_spark - Spark - Script
 - glue_extract_data - Python shell - Script
 - lambda-glue-trigger
+
+### Buckets S3 utilizados
 
 - s3://mlet8-fase2-pos/athena-mlet8/
 - s3://mlet8-fase2-pos/mlte8-scraping/

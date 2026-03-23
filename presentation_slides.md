@@ -39,21 +39,22 @@ Construir pipeline completo para dados da B3 usando:
 ARQUITETURA IMPLEMENTADA
 
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  run_scraper.py │ -> │ glue_extract_   │ -> │   S3 Bucket     │
-│                 │    │    data.py      │    │ mlte8-scraping  │
+│ glue_extract_   │ -> │   S3 Bucket     │ -> │ lambda_trigger_ │
+│    data.py      │    │ mlte8-scraping  │    │    glue.py      │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
-                                                       │
-                                                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│ lambda_trigger_ │ <- │   Evento S3     │ -> │ glue_refined.py │
-│    glue.py      │    │     PUT         │    │   (Spark)       │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                                       │
-                                                       ▼
-                                               ┌─────────────────┐
-                                               │ Tabela Athena   │
-                                               │ acoes_refined   │
-                                               └─────────────────┘
+Glue Job                Parquet Particionado   Função Lambda
+Agendado Diário                                      │
+                                                     ▼
+                                             ┌─────────────────┐
+                                             │ glue_refined.py │
+                                             │    (Spark)      │
+                                             └─────────────────┘
+                                                     │
+                                                     ▼
+                                             ┌─────────────────┐
+                                             │ Tabela Athena   │
+                                             │ acoes_refined   │
+                                             └─────────────────┘
 ```
 
 ---

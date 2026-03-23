@@ -2,50 +2,9 @@
 
 Este documento complementa a documentação técnica, fornecendo uma explicação detalhada de cada arquivo Python, suas classes, funções e funcionalidades. O foco é ajudar desenvolvedores a entenderem como o código funciona internamente e como os componentes interagem no pipeline ETL.
 
-## 1. Script de Entrada: `run_scraper.py`
+## 1. Glue Job de Extração: `app/services/glue_extract_data.py`
 
-**Localização:** Raiz do projeto (`/run_scraper.py`)
-
-**Propósito:** Ponto de entrada principal para execução local do scraper IBOV.
-
-### Estrutura do Código
-
-```python
-#!/usr/bin/env python3
-"""
-Script principal para executar o scraper do IBOV.
-"""
-
-import sys
-import os
-
-# Adiciona o diretório raiz ao path para permitir imports
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-from app.services.scraper_ibov_day import main
-
-if __name__ == "__main__":
-    main()
-```
-
-### Funcionalidades
-
-- **Configuração do Path:** Adiciona o diretório raiz ao `sys.path` para permitir imports relativos dos módulos em `app/`
-- **Execução:** Importa e chama a função `main()` do módulo `scraper_ibov_day`
-- **Código de Saída:** Retorna 0 em sucesso, 1 em falha (baseado no retorno de `main()`)
-
-### Fluxo de Execução
-
-1. Configura ambiente Python
-2. Importa função `main` do scraper
-3. Executa o scraping
-4. Encerra com código apropriado
-
----
-
-## 2. Scraper Local: `app/services/scraper_ibov_day.py`
-
-**Propósito:** Implementa a classe `IBOVScraper` para coleta local de dados do IBOV.
+**Propósito:** Implementa a classe `IBOVScraper` para coleta diária de dados do IBOV no AWS Glue.
 
 ### Classe `IBOVScraper`
 
@@ -150,7 +109,7 @@ Essas funções são cópias das que estão em `app/utils/data_cleaners.py`.
 
 ---
 
-## 4. Lambda Trigger: `app/services/lambda_trigger_glue.py`
+### 2. Lambda Trigger: `app/services/lambda_trigger_glue.py`
 
 **Propósito:** Função Lambda que aciona o job de refinamento quando arquivos são salvos no S3.
 
@@ -194,7 +153,7 @@ import json
 
 ---
 
-## 5. Glue Job de Refinamento: `app/services/glue_refined.py`
+### 3. Glue Job de Refinamento: `app/services/glue_refined.py`
 
 **Propósito:** Processa dados brutos, compara com partição anterior e gera dados refinados usando Apache Spark.
 
@@ -341,9 +300,7 @@ O IBOV é um índice dinâmico onde a participação das ações muda constantem
 - **Análise de Risco:** Monitorar concentração do índice
 - **Pesquisa de Investimentos:** Identificar ações com tendência de crescimento
 
----
-
-## 6. Utilitários: `app/utils/`
+### Dependências Externas
 
 - **GlueContext:** Para operações Glue (sinks, catálogos)
 - **SparkContext/SparkSession:** Para processamento distribuído
@@ -352,7 +309,7 @@ O IBOV é um índice dinâmico onde a participação das ações muda constantem
 
 ---
 
-## 6. Utilitários: `app/utils/`
+## 4. Utilitários: `app/utils/`
 
 ### `constants.py`
 
@@ -380,18 +337,16 @@ S3_PATH = ""
 
 ## Fluxo de Dados Entre Componentes
 
-1. **`run_scraper.py`** → **`scraper_ibov_day.py`**
-   - Chama `main()` que instancia `IBOVScraper` e executa `run()`
+1. **`glue_extract_data.py`** (Glue Job)
+   - Executa diariamente via trigger Glue
+   - Coleta dados da API B3
+   - Salva dados brutos em Parquet no S3
 
-2. **`glue_extract_data.py`** (Glue Job)
-   - Mesmo fluxo de `IBOVScraper`, mas salva no S3
-   - Dados vão para `s3://mlet8-fase2-pos/mlte8-scraping/`
-
-3. **Evento S3** → **`lambda_trigger_glue.py`**
+2. **Evento S3** → **`lambda_trigger_glue.py`**
    - Evento PUT no bucket aciona Lambda
    - Lambda extrai metadados e inicia `glue_refined_spark`
 
-4. **`glue_refined.py`** (Glue Job Spark)
+3. **`glue_refined.py`** (Glue Job Spark)
    - Recebe `--input_file` como argumento
    - Carrega dados atuais e anteriores
    - Processa, transforma e salva na tabela `acoes_refined`
