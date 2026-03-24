@@ -46,14 +46,25 @@
 **Tempo:** 4:00 - 8:00
 
 ### Requisitos 1-4: Extração e Ingestão (1:30)
-- **✅ Req 1:** "Scraping diário do IBOV via API da B3"
+- **✅ Req 1:** "Scraping diário do IBOV via site da  B3"
 - **✅ Req 2:** "Dados em Parquet particionado por data (anomesdia)"
+Mostrar Bucket S3 com os dados ANO MES E DIA
 - **✅ Req 3:** "Bucket S3 aciona Lambda automaticamente"
 - **✅ Req 4:** "Lambda em Python inicia job Glue"
 
 ### Requisitos 5-8: Processamento e Análise (2:30)
 - **✅ Req 5:** Transformações obrigatórias implementadas:
-  - **Agrupamento:** Contagem e soma de ações por categoria
+  - **Agrupamento:** Contagem e soma de ações por 
+  Mostrar codigo em spark . Mostrar partes onde as transformacoes ocorrem
+-1 https://github.com/vagnerasilva/mle_tech_chalenge_2/blob/develop/app/services/glue_refined.py#L32C2-L47C20
+
+-2 https://github.com/vagnerasilva/mle_tech_chalenge_2/blob/develop/app/services/glue_refined.py#L103C1-L106C1
+
+-3 https://github.com/vagnerasilva/mle_tech_chalenge_2/blob/develop/app/services/glue_refined.py#L122C1-L128C2
+
+-4 https://github.com/vagnerasilva/mle_tech_chalenge_2/blob/develop/app/services/glue_refined.py#L116C1-L119C2
+
+
   - **Renomeação:** `codigo`→`ticker`, `qtde_teorica`→`n_acoes_teoricas`
   - **Cálculo Temporal:** `diff_part_pct` (diferença de participação entre dias)
 
