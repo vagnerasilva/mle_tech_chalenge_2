@@ -1,7 +1,0 @@
-aws_access_key    = "AKIA..."
-aws_secret_key    = "wJalrXUtnFEMI..."
-aws_session_token = "IQoJb3JpZ2luX2VjE..."
-job_name          = "acoes_refined_job"
-script_path       = "s3://meu-bucket/scripts/glue_job.py"
-output_path       = "s3://meu-bucket/output/"
-schedule_cron     = "cron(0 3 * * ? *)"
