@@ -75,11 +75,16 @@ O scraper gera o arquivo `.parquet` contendo:
 
 # Links uteis 
 
-Apresentacao : 
+Video : 
+https://drive.google.com/file/d/1Ot2LZ37dx7u-j_y-HJqJ70NP7CFIf0kR/view?usp=sharing
+
+
+Arquitetura:
+https://drive.google.com/file/d/13In7QbzkXoeVXQ1Zd1NGTgTWGT2-BJNZ/view?usp=sharing
+
+
+
+Apresentacao:
 https://docs.google.com/presentation/d/1SqqSkTNXWJ_eD03MGPfhx81509R4FvX-NmOdm7pXniM/edit?usp=sharing
 
 
-
-https://drive.google.com/file/d/12z0F_ki3O7fxoxS1UrPE54DXYO-wWFZ9/view?usp=sharing
-
-https://drive.google.com/file/d/12z0F_ki3O7fxoxS1UrPE54DXYO-wWFZ9/view?usp=sharing
