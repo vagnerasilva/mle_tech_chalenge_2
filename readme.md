@@ -87,4 +87,6 @@ https://drive.google.com/file/d/13In7QbzkXoeVXQ1Zd1NGTgTWGT2-BJNZ/view?usp=shari
 Apresentacao:
 https://docs.google.com/presentation/d/1SqqSkTNXWJ_eD03MGPfhx81509R4FvX-NmOdm7pXniM/edit?usp=sharing
 
+# Notas
+<img width="2158" height="444" alt="image" src="https://github.com/user-attachments/assets/bb77aa62-dfd2-41be-897f-6531aeeb9d67" />
 
